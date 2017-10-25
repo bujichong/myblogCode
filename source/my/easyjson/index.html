@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>easyUI 列表数据生成器</title>
+<meta charset="utf-8">
+<link rel="icon" href="/images/logo.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" media="all" href="css/base.css" />
+<style type="text/css">
+.wrapper{margin:10px;}
+.resultbox{position: relative;width:880px;margin:0 auto;}
+
+.result,.inputbox{background-color: #f9f9f9;border:1px solid #ccc;margin-top:10px;min-height:120px;width:858px;padding:10px;display: block;font-family:Verdana;line-height:1.5em;margin-bottom:5px;}
+.result:hover{background-color:#f4f9ff;border-color:#8ec0ec;}
+.inputbox:focus{background-color:#fffcf6;border-color:orange;}
+
+.easyInput{position: relative;width:880px;margin:0 auto;}
+.setLine{margin-bottom: 10px;padding-bottom:10px;border-bottom: 1px dotted #ddd;}
+.txt{background-color: #fff;}
+.one{padding-top:4px;padding-bottom: 4px;}
+.one:hover{background-color: #fdf6e9;}
+
+.p-item{padding:0;}
+.soForm .p-item{padding-left:55px;}
+.soForm .lab-item{width:50px;top:0;}
+.row-fluid label.lab-chk{width: auto;vertical-align: middle;cursor: hand;cursor:pointer;display: -moz-inline-stack;display:inline-block;*display:inline;*zoom:1;padding-top: 5px;line-height:20px;}
+.fieldArea .chk{width:20px;height:20px;margin-right:5px;}
+.drop:focus{border:1px solid #75a9e4;}
+.one{position: relative;}
+.row-fluid{overflow: visible;}
+.btn-del{position: absolute;top:4px;right:-60px;background-color: #ccc;border:0px;}
+.btn-del:hover{color: #000;}
+.hk_form .btn-submit{width:120px;background-color: #646769;height:40px;font-size: 1.4em;}
+.hk_form .btn-add{background-color: orange;}
+.soForm .drop{width:42%;}
+.p-tip{cline-height:1.5em;padding:30px 0 50px;}
+.p-tip .s-title{font-weight: bold;color:orange;}
+.p-tip .s-cont{margin-right:10px; }
+.p-tip em{font-weight: bold;color:#0968f5;}
+
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+<div class="resultbox">
+  <textarea id="resultList" class="result" readonly="readonly"></textarea>
+</div>
+<div class="resultbox">
+    <textarea  id="resultJson"class="result resultJson" readonly="readonly"></textarea>
+</div>
+
+<div class="easyInput">
+    <form class="soForm hk_form pad-t10" method="post" data-opt="{'callback':'afterSubmitTurn','beforeCallback':'submitVPlus'}" id="vform" >
+        <textarea class="inputbox" placeholder="输入框只输入title和field，空格隔开，一行一条记录，示例demo数据默认宽度80，普通字符，无事件"></textarea>
+        <div class="row-fluid setLine">
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">记录数：</label><input type="number" class="txt txt-number required" name="txt" value="6" />
+          </p></div>
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">字符长：</label><input type="number" class="txt txt-strLen required" name="txt" value="6" />
+          </p></div>
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">total：</label><input type="number" class="txt txt-total required" name="txt" value="18" />
+          </p></div>
+        </div>
+      <fieldset class="fieldArea">
+        <div class="one row-fluid">
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">标题：</label><input type="text" class="txt required" name="title" />
+          </p></div>
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">字段名：</label><input type="text" class="txt required" name="field" />
+          </p></div>
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">宽度：</label><input type="number" class="txt" name="width" value="80" />
+          </p></div>
+          <div class="p3">
+              <select class="drop" name="type" >
+                <option value="1" selected="selected">普通字符</option>
+                <option value="2">中文</option>
+                <option value="3">数字</option>
+                <option value="4">短日期</option>
+                <option value="5">长日期</option>
+              </select>
+            <select class="drop" name="fn">
+                <option value="0" selected="selected">无事件</option>
+                <option value="1">有事件</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="one row-fluid">
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">标题：</label><input type="text" class="txt required" name="title" />
+          </p></div>
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">字段名：</label><input type="text" class="txt required" name="field" />
+          </p></div>
+          <div class="p3"><p class="p-item">
+              <label class="lab-item ">宽度：</label><input type="number" class="txt" name="width" />
+          </p></div>
+          <div class="p3">
+              <select class="drop" name="type" >
+                <option value="1" selected="selected">普通字符</option>
+                <option value="2">中文</option>
+                <option value="3">数字</option>
+                <option value="4">短日期</option>
+                <option value="5">长日期</option>
+              </select>
+            <select class="drop" name="fn">
+                <option value="0" selected="selected">无事件</option>
+                <option value="1">有事件</option>
+              </select>
+          </div>
+          <!-- <input type="button" class="btn btn-del" name="btnAdd" value="删除" /> -->
+        </div>
+
+      </fieldset>
+      <p class="pad-t15 center">
+          <input type="button" class="btn btn-submit" name="btnSubmit" value="生成" />
+          <input type="button" class="btn btn-submit btn-add" name="btnCancel" value="增加" />
+      </p>
+
+    <p class="p-tip"><span class="s-title">快捷键提示：</span> 任何状态下 <span class="s-cont"><em>小键盘+：</em>末尾增加一行 </span><span class="s-cont"><em>小键盘-：</em>末尾删除一行</span><span class="s-cont"><em>~键(左上角)：</em>快速生成结果</span></p>
+    </form>
+
+
+<!-- <div class="result">
+
+</div> -->
+
+  </div>
+</div>
+
+<div class="none"></div>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+$.fn.serializeObject = function() {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [ o[this.name] ];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    // $.each(o,function (k,v) {
+    //     if (v.push) {
+    //         o[k] = v.join(',');
+    //     }
+    // });
+    return o;
+}
+
+
+
+var easyAuto  = {
+  init : function () {
+    var me = this;
+    me.clickAdd();
+    me.clickSubmit();
+    me.keydownDo();
+    $('.result').focus(function() {
+      $(this).select();
+    });
+    // me.enterFn();
+  },
+  enterFn : function () {
+      var $input = $('.fieldArea').find(':input');
+      $input.eq(0).focus();
+      $input.keydown(function(e) {
+          if (e.keyCode == 13) {
+              if ($(this).hasClass('btn')) {return;};
+              var ix = $input.index(this);
+              // window.console && console.log(ix);
+              $input.eq(ix+1).focus();
+              return false;
+          };
+      });
+  },
+  clickAdd : function () {
+      var me = this;
+      $('.btn-add').click(function () {
+        me.addFn();
+      });
+  },
+  clickSubmit : function () {
+    var me = this;
+      $('.btn-submit').click(function  () {
+        me.submitFn();
+      });
+  },
+  keydownDo : function () {
+    var me = this;
+    $('.fieldArea .txt').eq(0).focus();
+    $(document).keydown(function(e) {
+      window.console && console.log(e.keyCode);
+        if (e.keyCode == 192) {//回车提交生成
+          me.submitFn();
+          return false;
+        };
+        if (e.keyCode == 107||e.keyCode == 187) {//按加号或等号添加一行
+           me.addFn();
+          return false;
+        };
+        if (e.keyCode == 109) {//按减号删除最后一行
+          me.delLastOne();
+          return false;
+        };
+    });
+  },
+  addHtml : '<div class="one row-fluid"><div class="p3"><p class="p-item"><label class="lab-item ">标题：</label><input type="text" class="txt required" name="title" /></p></div><div class="p3"><p class="p-item"><label class="lab-item ">字段名：</label><input type="text" class="txt required" name="field" /></p></div><div class="p3"><p class="p-item"><label class="lab-item ">宽度：</label><input type="number" class="txt" name="width" /></p></div><div class="p3"><select class="drop" name="type" ><option value="1" selected="selected">普通字符</option><option value="2">中文</option><option value="3">数字</option><option value="4">短日期</option><option value="5">长日期</option></select><select class="drop" name="fn"><option value="0" selected="selected">无事件</option><option value="1">有事件</option></select></div><input type="button" class="btn btn-del" name="btnAdd" value="删除" /></div>',
+  addFn : function () {
+    var me = this;
+    $('.fieldArea').append(me.addHtml);
+    var $new = $('.fieldArea').find('.one:last');
+    $new.find('.txt:first').focus();
+    me.clickDel($new);
+  },
+  submitFn : function () {
+    var me = this;
+    var demoLenth = $('.txt-number').val()*1||6;
+    var demoStrLen = $('.txt-strLen').val()*1||6;
+    var demoSTotal = $('.txt-total').val()*1||18;
+    var $area = $('.inputbox');
+    var areaVals = $.trim($('.inputbox').val());
+    var vals={title:[],field:[],type:[],width:[],fn:[]};
+    if (areaVals) {
+      var tempV = areaVals.split('\n');
+      var tempHtml = '';
+      $.each(tempV,function (i,v) {
+        var tm = v.split(/ +/g);
+        vals.title.push(tm[0]);
+        vals.field.push(tm[1]);
+        vals.type.push('1');
+        vals.width.push('80');
+        vals.fn.push('0');
+        tempHtml += '<div class="one row-fluid"><div class="p3"><p class="p-item"><label class="lab-item ">标题：</label><input type="text" class="txt required" name="title" value="'+tm[0]+'" /></p></div><div class="p3"><p class="p-item"><label class="lab-item ">字段名：</label><input type="text" class="txt required" name="field" value="'+tm[1]+'" /></p></div><div class="p3"><p class="p-item"><label class="lab-item ">宽度：</label><input type="number" class="txt" name="width" value="80" /></p></div><div class="p3"><select class="drop" name="type" ><option value="1" selected="selected">普通字符</option><option value="2">中文</option><option value="3">数字</option><option value="4">短日期</option><option value="5">长日期</option></select><select class="drop" name="fn"><option value="0" selected="selected">无事件</option><option value="1">有事件</option></select></div><input type="button" class="btn btn-del" name="btnAdd" value="删除" /></div>';
+        });
+        $('.fieldArea').html(tempHtml);
+        $('.fieldArea').find('.btn-del').click(function () {
+          $(this).parents('.one').remove();
+        });
+      };
+      vals = $('.soForm').serializeObject();
+      $area.val('');
+      // var vals = $.trim($area.val())||$('.soForm').serializeObject();
+      window.console && console.log(vals);
+      var len = vals.field.length;
+      var valsHtmlArr = [];
+
+      for (var i = 0 ; i <len; i++) {
+        var fmt = '';
+        if (vals.type[i]==4) {fmt = ",format:'yyyy-MM-dd'";};
+        if (vals.type[i]==5) {fmt = ",format:'yyyy-MM-dd HH:mm:ss'";};
+        var width = vals.width[i] || 80;
+        var fn = vals.fn[i]==1?",formatter: function(val,row,index){}":"";
+        valsHtmlArr.push("{title:'"+vals.title[i]+"',field:'"+vals.field[i]+"',width:"+width+fmt+fn+"}");
+      };
+
+      var demoJsonArr = [];
+      for (var j = 0 ; j <demoLenth; j++) {
+        demoJsonArr[j] ={};
+        (function(j){
+          $.each(vals.field, function (k,v) {
+            var txt = me.formatV(vals.type[k],demoStrLen);
+            demoJsonArr[j] [v] = txt;
+          });
+        })(j);
+      };
+      window.console && console.log();
+
+      var result = valsHtmlArr.join(',\n');
+      var resultJson = JSON.stringify(demoJsonArr);
+      resultJson ='{"rows":'+resultJson+',"total":'+demoSTotal+'}';
+      $('#resultList').val(result);
+      $('#resultJson').val(resultJson);
+  },
+  formatV : function (type,strLen) {
+    var valsDic = ['','ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678','的一是在不了有和人这中大为上个国我以要他时来用们生到作地于出就分对成会可主发年动同工也能下过子说产种面而方后多定行学法所民得经十三之进着等部度家电力里如水化高自二理起小物现实加量都两体制机当使点从业本去把性好应开它合还因由其些然前外天政四日那社义事平形相全表间样与关各重新线内数正心反你明看原又么利比或但质气第向道命此变条只没结解问意建月公无系军很情者最立代想已通并提直题党程展五果料象员革位入常文总次品式活设及管特件长求老头基资边流路级少图山统接知较将组见计别她手角期根论运农指几九区强放决西被干做必战先回则任取据处队南给色光门即保治北造百规热领七海口东导器压志世金增争济阶油思术极交受联什认六共权收证改清己美再采转更单风切打白教速花带安场身车例真务具万每目至达走积示议声报斗完类八离华名确才科张信马节话米整空元况今集温传土许步群广石记需段研界拉林律叫且究观越织装影算低持音众书布复容儿须际商非验连断深难近矿千周委素技备半办青省列习响约支般史感劳便团往酸历市克何除消构府称太准精值号率族维划选标写存候毛亲快效斯院查江型眼王按格养易置派层片始却专状育厂京识适属圆包火住调满县局照参红细引听该铁价严','1234567890'];
+    var txt;
+    if (type*1<4) {
+      var dic = valsDic[type];
+      var len = dic.length;
+      txt = '';
+      for(var  i=0;i< strLen;i++)  {
+        txt += dic.charAt(Math.floor(Math.random()*len));
+        }
+      }else{
+        txt = new Date().getTime();
+      }
+      return txt;
+  },
+  clickDel : function ($o) {
+    $($o).find('.btn-del').click(function() {
+      $o.remove();
+    });
+  },
+  delLastOne : function () {
+    if($('.one').length>2){
+      $('.one:last').remove();
+    }
+  }
+}
+
+
+$(function () {
+  easyAuto.init();
+});
+
+</script>
+
+
+</body>
+</html>

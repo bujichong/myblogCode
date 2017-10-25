@@ -1,0 +1,20 @@
+1，在  https://icomoon.io/app/#/select  将图标合并，
+合并教程：
+http://blog.csdn.net/crystal6918/article/details/52994393
+
+2，下载图标后覆盖所有soicon文件夹
+
+3，复制以下====中的内容到 demo.html 的head标签中，位置如下所示：
+    <!--[if lt IE 8]><!-->
+    <link rel="stylesheet" href="ie7/ie7.css">
+    <!--<![endif]-->
+------------------------------------------------
+
+<link type="text/css" rel="stylesheet" href="plus/plus.css" />
+<script type="text/javascript" src="plus/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="plus/plus.js"></script>
+
+------------------------------------------------
+</head>
+
+4，单独使用，可以添加调用style-plus.css，实现图标多尺寸、动画旋转、角度旋转等变化
