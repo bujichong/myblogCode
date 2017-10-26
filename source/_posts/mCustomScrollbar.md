@@ -12,8 +12,6 @@ tags:
 >
 >不过确实好用，为了备忘，特留此篇。
 
-
-
 插件地址： [点击这里](http://manos.malihu.gr/jquery-custom-content-scroller/)
 
 ## mCustomScrollbar 的参数介绍

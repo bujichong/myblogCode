@@ -18,8 +18,6 @@ tags:
 > 插件是完全用jQuery的animate动画和一些的基本操作来实现的，
 > 这样如果我们不使用css3完全可以做成兼容ie6的很多炫丽页面。
 
-
-
 **ok,首先是soScrollPage的api接口：**
 
 例如我们把页面都放在一个id叫 gpsIntroBox 的盒子里
