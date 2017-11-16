@@ -12,7 +12,7 @@ fs.readdir(sourcePath, function (err, files) {
     if (err) {
         return;
     }
-    console.log(files);
+    // console.log(files);
     let arr = [];
 
     function resizeImg (name,path,maxsize,quality) {
@@ -42,8 +42,11 @@ fs.readdir(sourcePath, function (err, files) {
 
         if (index == files.length) {
             fs.writeFile(outfile, JSON.stringify(arr, null, "\t"));
+            console.log('处理完毕,#^_^#');
             return;
         }
+
+        console.log('玩命处理中...,第'+(index+1)+'/'+files.length+'张，名称：'+files[index]);
 
         fs.stat(sourcePath + "/" + files[index], function (err, stats) {
             if (err) {
