@@ -294,10 +294,11 @@ $.getJSON('gallery.json',function(data){
   var pageNow = 0;
   var itemL = 40;
   var page = Math.ceil(data.length/itemL);//几页
+  var my7niuUrl = 'http://ozdubs5p9.bkt.clouddn.com/';
   $.each(data,function(i,v){
     v.src = '/photos/source/'+v.name;
-    v.gallery = '/photos/gallery/'+v.name;
-    v.thumb = '/photos/thumb/'+v.name;
+    v.gallery = my7niuUrl+'gallery/'+v.name;
+    v.thumb = my7niuUrl+'/thumb/'+v.name;
   });
   // window.console && console.log(data.length,page);
   var wW = Math.floor($(window).width()*0.99),wH = Math.floor($(window).height()*0.99),wWH = wW/wH;
@@ -337,8 +338,8 @@ $.getJSON('gallery.json',function(data){
                     }
                   };
                 }
-          str += '<a class="box" style="opacity:0;filter:alpha(opacity=0);" href="'+t.src+'" data-size="'+t.w+'x'+t.h+'" data-med="'+t.gallery+'" data-med-size="'+g.w+'x'+g.h+'" data-author="bujichong">'+
-                    '<img src="'+t.thumb+'" alt="" />'+
+          str += '<a class="box" style="opacity:0;filter:alpha(opacity=0);" href="'+t.gallery+'" data-size="'+t.w+'x'+t.h+'" data-med="'+t.gallery+'" data-med-size="'+g.w+'x'+g.h+'" data-author="bujichong">'+
+                    '<img width="'+t.tw+'" height="'+t.th+'" src="'+t.thumb+'" alt="" />'+
                     //'<figure>This is dummy caption.</figure>'+
                   '</a>';
             }
