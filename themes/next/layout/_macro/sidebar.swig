@@ -29,11 +29,13 @@
       <section class="site-overview-wrap sidebar-panel{% if not display_toc or toc(page.content).length <= 1 %} sidebar-panel-active{% endif %}">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+	  <div class="site-author-wrap">
             {% if theme.avatar %}
               <img class="site-author-image" itemprop="image"
                 src="{{ url_for( theme.avatar | default(theme.images + '/avatar.gif') ) }}"
                 alt="{{ theme.author }}" />
             {% endif %}
+	    </div>
               <p class="site-author-name" itemprop="name">{{ theme.author }}</p>
               <p class="site-description motion-element" itemprop="description">{#
             #}{% if theme.seo %}{#
@@ -43,6 +45,7 @@
             #}{% endif %}{#
             #}</p>
           </div>
+
 
           <nav class="site-state motion-element">
 
@@ -82,6 +85,10 @@
             {% endif %}
 
           </nav>
+
+          {% if theme.music163 %}
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id={{theme.music163.id}}&auto={{theme.music163.autoplay}}&height=32"></iframe>
+          {% endif %}
 
           {% if theme.rss %}
             <div class="feed-link motion-element">
@@ -170,6 +177,9 @@
         </div>
       {% endif %}
 
+
     </div>
+
   </aside>
+
 {% endmacro %}

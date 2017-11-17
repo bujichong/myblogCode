@@ -32,6 +32,7 @@ keywords: "前端,js,jquery,javascript,html5,开发者,程序猿,极客,编程,�
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
+
 rss:
 
 footer:
@@ -89,6 +90,7 @@ menu:
   #tags: /tags/ || tags
   #categories: /categories/ || th
   archives: /archives/ || archive
+  photo: /photo || photo
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
@@ -96,7 +98,6 @@ menu:
 # Enable/Disable menu icons.
 menu_icons:
   enable: true
-
 
 # ---------------------------------------------------------------
 # Scheme Settings
@@ -113,6 +114,9 @@ scheme: Gemini
 # Sidebar Settings
 # ---------------------------------------------------------------
 
+music163 :
+  id : "446512502"
+  autoplay : 0
 # Social Links.
 # Usage: `Key: permalink || icon`
 # Key is the link label showing to end users.
@@ -146,7 +150,7 @@ links_layout: block
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-#avatar: /images/avatar.gif
+avatar: /images/config/bujichong.min.jpg
 
 # Table Of Contents in the Sidebar
 toc:
@@ -223,9 +227,9 @@ post_meta:
 post_wordcount:
   item_text: true
   wordcount: false
-  min2read: false
-  totalcount: false
-  separated_meta: true
+  min2read: true
+  totalcount: true
+  separated_meta: false
 
 # Wechat Subscriber
 #wechat_subscriber:
