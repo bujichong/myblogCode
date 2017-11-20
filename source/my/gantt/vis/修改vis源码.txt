@@ -1,0 +1,18 @@
+ ============
+
+ 修改行数区间：21435 21448
+      case 'day':
+        var day = current.date();
+        var year = current._d.getFullYear();
+        var month = current.format('MMMM').toLowerCase();
+        var newDay = day<10?('0'+day):day;
+        return 'myvis-day myvis__'+year+'-'+month+'-'+newDay+'__ vis-day' + day + ' vis-' + month + currentMonth(current) + even(day - 1);
+
+      case 'month':
+        return 'myvis-month vis-' + current.format('MMMM').toLowerCase() + currentMonth(current) + even(current.month());
+
+      case 'year':
+        var year = current.year();
+        return 'myvis-year vis-year' + year + currentYear(current) + even(year);
+
+ ============

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="html_list">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>甘特图示例</title>
+<link type="text/css" rel="stylesheet" href="socss.css" />
+<body>
+<div class="wrapper">
+<!-- <link rel="stylesheet" type="text/css" href="vis/vis.min.css"> -->
+<link rel="stylesheet" type="text/css" href="vis/vis-timeline-graph2d.min.css">
+<style type="text/css">
+.h2-tableTitle{font-size:1.14em;text-align: center;height:40px;line-height:40px;}
+.timeby{position: absolute;right:8px;top:8px;}
+.s-timeby{display: -moz-inline-stack;display:inline-block;*display:inline;*zoom:1;height:22px;line-height:22px;padding:0 25px;margin-left:-1px;border:1px solid #ddd;cursor: hand;cursor: pointer;}
+.s-timeby:hover{color:#ff4900;}
+.s-bynow{border:1px solid orange;color:#ff4900;position: relative;}
+.s-linetip{margin: 0 0 0 5px;font-weight: bold;}
+.em-linetip{color:#F97600;font-weight: bold;}
+.vis-item.vis-range{-moz-border-radius:1px;-webkit-border-radius:1px;border-radius:1px;}
+.vis-item{overflow: hidden;zoom: 1;height:10px;border:0;border-color: #80d1ff;background-color: #80d1ff;cursor:hand;cursor:pointer;}
+.typeB{color: #d61f1f;border: 0px solid #f7c062;background-color: #f7c062;}
+.vis-time-axis .vis-grid.vis-minor{border-color: #eee;}
+.vis-time-axis .vis-grid.vis-major{border-color: #f9c9de;}
+.vis-labelset .vis-label,
+.vis-foreground .vis-group{border-color: #e9e9e9;}
+.vis-panel.vis-top,.vis-panel.vis-center,.vis-panel.vis-left{border-color:#f9c9de;}
+.vis-panel.vis-bottom{border-color:#bfbfbf;}
+/*.vis-odd{background-color: #fcfcfc;}*/
+.vis-time-axis .vis-text{text-align: center;cursor: hand;cursor: pointer;}
+.vis-time-axis .vis-text:hover{color:#ff4900;}
+.vis-item.vis-selected{background-color: #0e9cec;box-shadow:1px 1px 4px #66bce4;-webkit-box-shadow:1px 1px 4px #66bce4;-moz-box-shadow:1px 1px 4px #66bce4;}
+.typeB.vis-selected{background-color: #fd753c;box-shadow:1px 1px 4px #e48787;-webkit-box-shadow:1px 1px 4px #e48787;-moz-box-shadow:1px 1px 4px #e48787;}
+/*.vis-text.vis-current-month{background-color: #fdf1e4;border-left:1px solid #ddd;}*/
+/*.vis-text.vis-current-month:first-child{border-left:0;}*/
+.vis-current-time{background-color:#7198ff;width:2px;}
+</style>
+<h3 class="h2-tableTitle">vis制作简易的甘特图</h3>
+<div class="timeby"><span class="s-timeby s-byday s-bynow" rel="day">日</span><span class="s-timeby s-bymonth" rel="month">月</span><span class="s-timeby s-byyear" rel="year">年</span></div>
+<div id="mytimeline"></div>
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="vis/vis.js"></script>
+<script type="text/javascript">
+
+var msg1="<p title='点击查看详情'><span>机器: <b class='b-no'>{machNo}</b></span><br/><span>修改了<b class='b-count'>{count}</b>次</span><span class='hide fn_msgInfo'>{msg}</span></p>";
+var msg="<p title='点击查看详情'><span>机器: <b class='b-no'>{machNo}</b></span><br/><span>{time}分钟内修改了<b class='b-count'>{count}</b>次</span><span class='hide fn_msgInfo'>{msg}</span></p>";
+var data,dh = $(window).height()-45;
+
+
+
+
+
+// create a dataset with items
+// we specify the type of the fields `start` and `end` here to be strings
+// containing an ISO date. The fields will be outputted as ISO dates
+// automatically getting data from the DataSet via items.get().
+var items = new vis.DataSet({
+    type: { start: 'ISODate', end: 'ISODate' }
+});
+var groups = new vis.DataSet([{
+    id: 'foo', content:'需求分析，文档整理', subgroupOrder: 'subgroupOrder' // this group has no subgroups but this would be the other method to do the sorting.
+},{
+    id: 'bar', content:'<span style="color:blue">设计及前端开发</span>', subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;}
+},{
+    id: 'tree', content:'程序开发', subgroupOrder: 'subgroupOrder' // this group has no subgroups but this would be the other method to do the sorting.
+}]);
+// add items to the DataSet
+items.add([
+    {id: 1, content: '',title:'所以所以', start: '2017-10-23 18:00', end: '2017-10-26 12:00:00',group:'bar', className:'typeA',subgroup:'sg_1', subgroupOrder:0},
+    {id: 2, content: '', start: '2017-10-24', end: '2017-10-29',group:'bar', subgroup:'sg_2', className:'typeB', subgroupOrder:1},
+    {id: 3, content: '', start: '2017-10-20', end: '2017-10-22',group:'foo', subgroup:'sg_1'},
+    {id: 4, content: '', start: '2017-10-20', end: '2017-10-23',className:'typeB', group:'foo',subgroup:'sg_2'},
+    {id: 5, content: '', start: '2017-10-31 0:00', end: '2017-11-09 0:00',group:'tree', subgroup:'sg_3', subgroupOrder:1},
+    {id: 6, content: '', start: '2017-11-01 0:00', end: '2017-11-11 0:00',group:'tree', className:'typeB', subgroup:'sg_4', subgroupOrder:2}
+]);
+
+var container = document.getElementById('visualization');
+
+//根据页面宽度调整列宽度系数 begin
+var zoomby = 3;
+function reZoomBy () {
+    var wW = $(window).width();
+    if (wW<1000) {
+        zoomby=2;
+    }else if (wW>1000&&wW<1400) {
+        zoomby=3;
+    }else if (wW>1500&&wW<2000) {
+        zoomby=4;
+    }else if (wW>2000) {
+        zoomby=6;
+    };
+    // window.console && console.log(zoomby);
+}
+$(window).resize(function () {
+    reZoomBy();
+});
+reZoomBy();
+//根据页面宽度调整列宽度系数end
+
+var options = {
+    timeAxis :{
+        scale : 'day',
+        step :1
+    },
+    zoomMin:3600000*24*12*zoomby,
+    zoomMax:3600000*24*12*zoomby,
+    height: dh+"px",
+    // maxHeight: dh+"px",
+    // minHeight: "100px",
+    min: new Date('2017-10-10'),
+    // max: new Date().getTime() + 12 * 3600 * 1000,
+    margin : {
+      axis:6,
+      item:6
+    },
+    start : new Date().getTime(),//居中日期
+    // showTooltips : true,
+    // tooltip:{
+    //   followMouse:true
+    // },
+    // verticalScroll : true,
+    // horizontalScroll : true,
+    autoResize : false,
+    editable: false,   // enable dragging and editing items
+    //height: "auto",
+    zoomable:false,
+    // zoomKey : 'altKey',
+    showCurrentTime:true,
+    orientation: 'top'
+    // stack : false,
+    // stackSubgroups: true,
+    // format :{
+    //   minorLabels: {
+    //     millisecond:'SSS',
+    //     second:     's',
+    //     minute:     'HH:mm',
+    //     hour:       'HH:mm',
+    //     weekday:    'ddd D',
+    //     day:        'D',
+    //     // week:       'w',
+    //     month:      'MMM',
+    //     year:       'YYYY'
+    //   },
+    //   majorLabels: {
+    //     millisecond:'HH:mm:ss',
+    //     second:     'MMMM-D HH:mm',
+    //     minute:     'MMMM-D ddd',
+    //     hour:       'MMMM-D ddd',
+    //     weekday:    'YYYY-MMMM',
+    //     day:        'YYYY-MMMM',
+    //     // week:       'YYYY-MMMM',
+    //     month:      'YYYY',
+    //     year:       ''
+    //   }
+    // }
+};
+
+
+// var options = {
+//     // orientation:'top'
+//     start: '2017-10-10',
+//     end: '2017-02-10',
+//     // editable: true,
+//     stack: false,
+//     stackSubgroups: true
+// };
+
+var timeline = new vis.Timeline(mytimeline, items, groups, options);
+
+function toggleStackSubgroups() {
+    options.stackSubgroups = !options.stackSubgroups;
+    timeline.setOptions(options);
+}
+
+var timebyOpt ={
+    day : {
+        zoomMin : 3600000*24*12*zoomby,
+        zoomMax : 3600000*24*12*zoomby,
+        timeAxis : {
+            scale : 'day',
+            step : 1
+        }
+    },
+    month : {
+        zoomMin : 3600000*24*4*30*zoomby,
+        zoomMax : 3600000*24*4*30*zoomby,
+        timeAxis : {
+            scale : 'month',
+            step : 1
+        }
+    },
+    year : {
+        zoomMin : 3600000*24*4*30*12*zoomby,
+        zoomMax : 3600000*24*4*30*12*zoomby,
+        timeAxis : {
+            scale : 'year',
+            step : 1
+        }
+    }
+}
+var timeType = 'day';
+
+$('.s-timeby').click(function () {
+    timeType = $(this).attr('rel');
+    // window.console && console.log(timeType,zoomby);
+    $('.s-timeby').removeClass('s-bynow');
+    $(this).addClass('s-bynow');
+    // window.console && console.log(timebyOpt[timeType]);
+    timeline.destroy();
+    timeline = new vis.Timeline(mytimeline, items, groups, $.extend(options,timebyOpt[timeType]));
+    // timeline.setOptions(timebyOpt[timeType]);
+    // timeline.redraw();
+});
+
+
+$('#mytimeline').on('click',function (e) {
+    var $tar = $(e.target);
+    if ($tar.hasClass('myvis-day')) {
+        var v = $tar.text();
+        if (v.indexOf('-')==-1) {
+            var cls = $tar.attr('class');
+            var date = cls.split('__')[1];
+            window.console && console.log(date);
+        };
+    };
+})
+
+    </script>
+</div>
+</body>
+</html>
