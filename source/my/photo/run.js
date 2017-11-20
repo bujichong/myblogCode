@@ -63,7 +63,7 @@ fs.readdir(sourcePath, function (err, files) {
                 return;
             }
 
-            let tb = resizeImg('w',files[index],thumbPath,320,90);
+            let tb = resizeImg('w',files[index],thumbPath,300,90);
             let sz = resizeImg('auto',files[index],galleryPath,1500,80);
 
             if (stats.isFile()) {
