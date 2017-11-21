@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<meta name="Copyright" content="曲美官网" />
+<meta name="keywords" content="曲美官网" />
+<meta name="description" content="曲美官网" />
+<title>copper使用</title>
+<link type="text/css" rel="stylesheet" media="all" href="css/socss.css" />
+<link type="text/css" rel="stylesheet" media="all" href="css/cropper.min.css" />
+<style type="text/css">
+.filebox{clear: both;padding:10px;}
+.imgbox-wrap{float: left;width:500px;}
+.imgbox{width:500px;height:400px;}
+/*.imgbox .cropper-hidden{display: none;}*/
+.preview{float: left;overflow: hidden;margin-left:10px;-moz-border-radius:200px;-webkit-border-radius:200px;border-radius:200px;}
+.preview-1{width:300px;height:300px;}
+.preview-2{width:200px;height:200px;}
+.preview-3{width:100px;height:100px;}
+.resultBox{clear: both;}
+
+.p-opbox{padding:1em 0;overflow: hidden;zoom: 1;text-align: center;}
+.s-op{display: -moz-inline-stack;display:inline-block;*display:inline;*zoom:1;height:30px;line-height:30px;padding:0 1em;background-color:#1d83fb;color:#fff;margin:0 0.2em;cursor: hand;cursor: pointer;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;}
+.s-op-scaleX,.s-op-scaleY{background-color:#f17d2f;}
+.s-op:hover{filter:alpha(opacity=85);opacity:0.85;}
+</style>
+</head>
+<body>
+  <div class="filebox">
+      <input type="file" id="up" />
+  </div>
+  <div class="imgbox-wrap">
+    <div class="imgbox"><img class="cropper-hidden" id="image" src="images/picture.jpg" height="720" width="1280" alt="Picture"></div>
+    <p class="p-opbox">
+      <span class="s-op s-op-rotateL">向左旋转</span>
+      <span class="s-op s-op-rotateR">向右旋转</span>
+      <span class="s-op s-op-scaleX" rel="1">水平翻转</span>
+      <span class="s-op s-op-scaleY" rel="1">垂直翻转</span>
+      <!-- <span class="s-op s-op-getData">获取数据结果</span> -->
+      <span class="s-op s-op-getCanvas">截取结果(canvas转64)</span>
+    </p>
+    <!-- <p class="p-result"></p> -->
+  </div>
+<div class="preview preview-1"></div>
+<div class="preview preview-2"></div>
+<div class="preview preview-3"></div>
+
+<div class="resultBox">
+  <img id="img-result"src="images/bg.png" height="200" width="200" alt="" />
+</div>
+
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<!-- <script type="text/javascript" src="js/jquery.uploadPreview.js"></script> -->
+<script type="text/javascript" src="js/cropper.js"></script>
+<script type="text/javascript">
+  var mycropper = {
+    init : function () {
+      var me = this;
+      me.uploadImg();
+      me.cropper();
+    },
+    cropper : null,
+    dataURLtoBlob : function (dataurl) {//base64 to blob(file)，没用这个函数
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    },
+    blobToDataURL : function (blob, callback) {//blob(file) to base64，没用这个函数
+        var a = new FileReader();
+        a.readAsDataURL(blob);
+        a.onload = function (e) { callback(e.target.result); }
+    },
+    cropper : function () {//new cropper
+      var me = this;
+      // var image = document.querySelector('#image');
+      var imgage = document.getElementById('#image');
+      me.cropper = new Cropper(image, {
+        viewMode :1,
+        aspectRatio : 1,
+        zoomable : false,
+        // checkOrientation : false,
+        preview : '.preview',
+        ready : function () {
+        }
+      });
+
+      me.cropperOp();//操作事件
+    },
+    cropperOp : function () {//cropper操作事件
+      var me = this;
+
+      $('.s-op-rotateL').click(function () {//左转
+        me.cropper.rotate(-90);
+      });
+
+      $('.s-op-rotateR').click(function () {//右转
+        me.cropper.rotate(90);
+      });
+
+      $('.s-op-scaleX').click(function () {//水平翻转
+        var v = $(this).attr('rel');
+        var scaleX = 1;
+        if (v==='1') {
+          scaleX = -1;
+          $(this).attr('rel','-1');
+        }else{
+          scaleX = 1;
+          $(this).attr('rel','1');
+        };
+        me.cropper.scaleX(scaleX);
+      });
+
+      $('.s-op-scaleY').click(function () {//垂直翻转
+        var v = $(this).attr('rel');
+        var scaleY = 1;
+        if (v==='1') {
+          scaleY = -1;
+          $(this).attr('rel','-1');
+        }else{
+          scaleY = 1;
+          $(this).attr('rel','1');
+        };
+        me.cropper.scaleY(scaleY);
+      });
+
+      $('.s-op-getData').click(function () {//获取结果
+        var result = me.cropper.getData();
+        window.console && console.log(result);
+      });
+
+      $('.s-op-getCanvas').click(function () {//通过cropper提供的转canvas方法，再转成base64位图片，他奶奶的简直太省心了 ，兼容 ie9+
+        var result = me.cropper.getCroppedCanvas({ width: 200, height: 200,imageSmoothingQuality:'medium'});//设置导出的图片属性
+        window.console && console.log(result);
+        imgData = result.toDataURL('image/jpg');//获取convas转换后的base64位码
+        $("#img-result").attr("src",imgData);
+      });
+
+    },
+    getObjectURL : function (file) {
+        var url = null;
+        if (window.createObjectURL != undefined) {
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    },
+    uploadImg : function () {
+      var me = this;
+      $("#up").change(function() {
+          var file = this.files[0]; //获取file对象
+          //判断file的类型是不是图片类型。
+          if(!/image\/\w+/.test(file.type)){
+              alert("文件必须为图片！");
+              return false;
+          }
+          var  blobUrl = me.getObjectURL(file);
+          me.cropper.replace(blobUrl);
+      });
+
+      // $("#up").uploadPreview({//调用插件兼容性更好，其实没必要，用这个基本抛弃ie了
+      //   img: "image",
+      //   width: 10, height: 10,
+      //   callback:function () {
+      //     var blobUrl  = $('#image').attr('src');
+      //     me.cropper.replace(blobUrl);
+      //   }
+      // });
+    }
+  }
+
+
+$(function () {
+  mycropper.init();
+});
+
+</script>
+</body>
+</html>
