@@ -10,7 +10,7 @@ tags:
 >easyUI grid列表数据及测试JSON自动生成器
 >实在是烦透了写easyUI  grid的列表数据，一个一个字符敲，烦的很，尤其很多时候我做静态页需要测试json，测试json写死人，也很花时间，花了一下午用js写了一个自动化生成器，
 
-地址在 [这里](/easyjson/index.html)
+地址在 [这里](/my/easyjson/index.html)
 基本也没什么太特别的，就是填写title和field自动生成list数据，
 尤其是生成了可以用来显示的json demo字段，
 我这里做了几个json数据内容类型，
