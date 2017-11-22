@@ -154,14 +154,17 @@
     uploadImg : function () {
       var me = this;
       $("#up").change(function() {
+        if (this.value!=='') {
           var file = this.files[0]; //获取file对象
           //判断file的类型是不是图片类型。
           if(!/image\/\w+/.test(file.type)){
               alert("文件必须为图片！");
+              this.value = '';//清空value，避免重复选择不提示
               return false;
           }
           var  blobUrl = me.getObjectURL(file);
           me.cropper.replace(blobUrl);
+        };
       });
 
       // $("#up").uploadPreview({//调用插件兼容性更好，其实没必要，用这个基本抛弃ie了
