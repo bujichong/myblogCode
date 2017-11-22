@@ -90,7 +90,7 @@ menu:
   #tags: /tags/ || tags
   #categories: /categories/ || th
   archives: /archives/ || archive
-  photo: /my/photo/ || photo
+  photo: /my/photo/indexWall.html || photo
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat

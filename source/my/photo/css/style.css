@@ -7,4 +7,4 @@ header a.a-back:hover{text-decoration: underline;}
 #galleryBox{ margin:10px auto; position:relative;}
 .box {float:left; padding:8px; border:1px solid #ccc; background:#f7f7f7; box-shadow:0 0 8px #ccc;overflow: hidden;font-size:0;line-height:0;}
 .box:hover { box-shadow:0 0 10px #999; }
-.box img { width:300px; }
+.box img { width:200px; }

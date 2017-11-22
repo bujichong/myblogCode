@@ -8,7 +8,8 @@ const fs = require("fs");
 
 const opt = {
     filePath : 'json',
-    outFile : 'join.json'
+    outFile : 'join.json',
+    outAbsFile : 'absJoin.json'
 }
 
 // var file="json/2017-11-20.json";
@@ -33,36 +34,35 @@ fs.readdir(opt.filePath, function (err, files) {
     if (err) {
         return;
     }
-    let arr = [];
+    let arr = [] ,absArr = [];
 
     // console.log(files);
     (function iterator(index) {
 
         if (index == files.length) {
             fs.writeFile(opt.outFile,JSON.stringify(arr, null, "\t"));
+            fs.writeFile(opt.outAbsFile,JSON.stringify(absArr, null, "\t"));
             console.log('处理完毕,#^_^#');
             return;
         }
 
         console.log('合并中...,第'+(index+1)+'/'+files.length+'个，名称：'+files[index]);
         let file = opt.filePath + "/" + files[index];
-        fs.stat(file, function (err, stats) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            let cTime = bjTime(stats.birthtime);//转化时间
-            let fileData =  JSON.parse(file);
 
-            arr.push({
-                name : files[index].split('.')[0],
-                time:cTime.time,
-                timeString:cTime.timeString,
-                data : fileData.data,
-                info : fileData.info?fileData.info:''
-            });
-            iterator(index + 1);
-        })
+        let fileData =  JSON.parse(fs.readFileSync( file));
+        fileData.name =  files[index].split('.')[0];
+        arr.push(fileData);
+
+        absArr.push({
+            title : fileData.title,
+            info : fileData.info,
+            name :  files[index],
+            time : fileData.time,
+            // timeString : fileData.timeString,
+            pic : fileData.data[0]
+        });
+        iterator(index + 1);
+
 
     }(0));
 });

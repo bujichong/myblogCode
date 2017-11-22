@@ -292,12 +292,9 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
 $.getJSON('json/all.json',function(rst){
   var data = rst.data;
-  var pageNow = 0;
-  var itemL = 60;
-  var page = Math.ceil(data.length/itemL);//几页
   var my7niuUrl = 'http://ozdubs5p9.bkt.clouddn.com/';
   $.each(data,function(i,v){
-    v.src = '/photos/source/'+v.name;
+    // v.src = '/photos/source/'+v.name;
     v.gallery = my7niuUrl+'gallery/'+v.name;
     v.thumb = my7niuUrl+'/thumb/'+v.name;
   });
@@ -309,48 +306,37 @@ $.getJSON('json/all.json',function(rst){
     wWH = wW/wH;
   });
 
-  $("#galleryBox").waterfall({
-      itemClass: ".box",
-      minColCount: 4,
-      spacingHeight: 10,
-      resizeable: true,
-      ajaxCallback: function(success, end) {
-          // window.console && console.log(pageNow);
-          if (pageNow<page) {
-            var pageData = data.splice(0,itemL);
-            // window.console && console.log(pageData);
-            pageNow++;
-            var str = "";
-            var dl = pageData.length;
-            for(var i = 0; i < dl; i++) {
-                var t = pageData[i];
-                var g = {w:t.w,h:t.h};
-                if(t.w>wW||t.h>wH){
-                  var tWH = t.w/t.h;
-                  if (Math.floor(tWH*100)>=Math.floor(wWH*100)) {
-                    g = {
-                      w : wW,
-                      h : Math.floor(t.h*wW/t.w)
-                    }
-                  }else{
-                    g = {
-                      h : wH,
-                      w : Math.floor(t.w*wH/t.h)
-                    }
-                  };
-                }
-          str += '<a class="box" style="opacity:0;filter:alpha(opacity=0);" href="'+t.gallery+'" data-size="'+t.w+'x'+t.h+'" data-med="'+t.gallery+'" data-med-size="'+g.w+'x'+g.h+'" data-author="bujichong">'+
-                    '<img width="'+t.tw+'" height="'+t.th+'" src="'+t.thumb+'" alt="" />'+
-                    //'<figure>This is dummy caption.</figure>'+
-                  '</a>';
-            }
-            $(str).appendTo($("#galleryBox"));
-            setTimeout(function () {
-              success();
-              end();
-              initPhotoSwipeFromDOM('#galleryBox');
-            },300);
-        }
-    }
+
+  var str = "";
+  var dl = data.length;
+  for(var i = 0; i < dl; i++) {
+      var t = data[i];
+      var g = {w:t.w,h:t.h};
+      if(t.w>wW||t.h>wH){
+        var tWH = t.w/t.h;
+        if (Math.floor(tWH*100)>=Math.floor(wWH*100)) {
+          g = {
+            w : wW,
+            h : Math.floor(t.h*wW/t.w)
+          }
+        }else{
+          g = {
+            h : wH,
+            w : Math.floor(t.w*wH/t.h)
+          }
+        };
+      }
+str += '<a class="box" href="'+t.gallery+'" data-size="'+t.w+'x'+t.h+'" data-med="'+t.gallery+'" data-med-size="'+g.w+'x'+g.h+'" data-author="bujichong">'+
+          '<img width="'+t.tw+'" height="'+t.th+'" src="'+t.thumb+'" alt="" />'+
+          //'<figure>This is dummy caption.</figure>'+
+        '</a>';
+  }
+  $(str).appendTo($("#galleryBox"));
+  var $iw_thumbs = $('#galleryBox');
+  $iw_thumbs.imagesLoaded(function(){
+    $iw_thumbs.masonry({
+      isAnimated  : true
+    });
   });
+  initPhotoSwipeFromDOM('#galleryBox');
 });

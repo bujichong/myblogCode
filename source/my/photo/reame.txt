@@ -1,0 +1,17 @@
+1，环境安装
+安装Node
+安装 node images : npm install images
+https://github.com/zhangyuanwei/node-images
+
+2，配置文件
+配置： config.js
+并将对应的图片及相关文件夹对应正确
+
+3，运行：
+
+处理图片，执行命令：
+node run.js  或
+node run.js run
+
+完成后合并json，再运行：
+node run.js join
