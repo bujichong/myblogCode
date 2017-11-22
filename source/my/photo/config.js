@@ -1,8 +1,8 @@
 module.exports = {
   numberNaming : true, //是否用序列命名文件
   justJson : false, //是否只输出Json，不处理图片
-  filePath : "photos/", //图片总目录
-  fileOutPath : "photos/out/", //图片输出目录
+  filePath : "../../../photos/", //图片总目录
+  fileOutPath : "../../../photos/out/", //图片输出目录
   jsonOutPath : "json/one/", //每个文件生成的json存放目录
   join : {//用来join的参数
     path : 'json/', //join对应的目录
