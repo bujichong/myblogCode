@@ -1,0 +1,14 @@
+1 / 71-73行：
+添加：
+if(_d=='validatebox'){
+r = $(".easyui-"+_d+",.txt-validate",_c);
+}
+
+2 / 6636-6643行：
+var needMsg = $(_4d1).attr('noNull');
+if(needMsg){
+$(_4d1).addClass('required');
+opts.required = true;
+opts.missingMessage = needMsg;
+}
+

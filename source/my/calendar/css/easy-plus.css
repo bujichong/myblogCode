@@ -1,0 +1,76 @@
+/* easyui repair */
+.textbox{border-radius:1px;}
+.textbox .textbox-text,.textbox .textbox-text:focus{
+height:26px!important;padding-right:0;
+background-color:#fff;border:0;
+box-shadow:0 0 0 #fff;-webkit-box-shadow:0 0 0 #fff;-moz-box-shadow:0 0 0 #fff;
+}
+.panel{border:0;}
+.panel-header, .panel-body{border:0;}
+.calendar-menu-next{margin-left: 0;}
+.calendar-menu-prev{margin-right: 0;}
+.tabs li.tabs-selected a.tabs-inner,.tabs li.tabs-selected a.tabs-inner:hover{
+color: #fff;
+background: #00A0E9;
+border:0;
+border-bottom:1px solid #00A0E9;
+}
+.tabs{border-color: #00A0E9;}
+.tabs-p-tool a:hover,
+.tabs li a:hover.tabs-close,
+.tabs-scroller-over {
+  background-color: #e2e2e2;
+}
+.tabs{height:32px!important;}
+.tabs li a.tabs-inner{height:32px!important;padding: 0 25px;border-bottom:0;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;border:0;}
+.tabs li.tabs-selected a.tabs-inner{}
+.tabs li a.tabs-close{margin-top: -12px;}
+.tabs li.tabs-selected a.tabs-inner{}
+
+.ul-userTree .tree-file{background:url(../images/easyui/i-user.png) no-repeat center;}
+.ul-powerTree .tree-file{background:url(../images/easyui/i-key.png) no-repeat ;}
+.combo-panel{border:1px solid #e5e5e5;}
+.combo-arrow{border-left: 1px solid #e5e5e5;}
+
+.combo-panel{border: 1px solid #ddd;border-top:0;-webkit-box-shadow:1px 1px 1px #ccc;box-shadow:1px 1px 1px #ccc;}
+.tooltip{
+background-color: #fdf7db!important;
+border-color: #fbd396!important;
+color: #000000!important;
+}
+
+.panel-body{color:#555;}
+.datagrid-htable, .datagrid-btable, .datagrid-ftable{color:#555;}
+.datagrid-view {position: relative;overflow: hidden;border-top: 2px solid #6fbcfd;}
+.datagrid-header td, .datagrid-body td, .datagrid-footer td{border-color:#e3e3e3;}
+.datagrid-cell,.datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber{height:28px!important;line-height:28px!important;}
+.datagrid-header .datagrid-cell{height:32px!important;line-height:32px!important;font-weight: bold;color:#000;}
+.datagrid-row{height:28px;}
+.datagrid-row-over,.tree-node-hover{background-color:#deeefb;color:#000;}
+.datagrid-row-selected,.tree-node-selected{background-color:#fff1d2;color:#000;}
+.pagination .pagination-num{padding:0;}
+
+.datagrid-view .datagrid-editable-input{height: 26px!important;}
+.datagrid-view .textbox{height: 24px!important;vertical-align:top;}
+.datagrid-view .textbox .textbox-text{height: 24px!important;}
+.datagrid-view input[type="checkbox"].datagrid-editable-input{height:16px!important;}
+
+.tree-expanded {background: url(../images/easyui/tree_icons.png) no-repeat -18px 0px;}
+.tree-folder {background: url(../images/easyui/tree_icons.png) no-repeat -208px 0;}
+.tree-folder-open {background:url(../images/easyui/tree_icons.png) no-repeat -224px 0;}
+.tree-file {background:url(../images/easyui/tree_icons.png) no-repeat -240px 0;}
+
+/* datebox */
+.datebox .combo-arrow{background:url(../images/icon/inputmark.png) no-repeat -26px 0;width:23px!important;}
+.calendar{font-family:Verdana,Arial,"Microsoft YaHei","SimSun";}
+.calendar-title span{-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;}
+.calendar-menu-month{-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;}
+.calendar-header{background-color:#e2f1ff;border-bottom: 1px solid #fff;}
+.calendar-saturday{color:#ee0077;}
+.calendar-day{-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;border:0;}
+.calendar-selected{background-color:#f98e52;font-weight: bold;border:0;}
+.calendar-nav-hover{font-weight: bold;}
+.panel-htop{box-shadow:1px 1px 2px #eee;-webkit-box-shadow:1px 1px 2px #eee;-moz-box-shadow:1px 1px 2px #eee;-moz-border-radius: 0 0 4px 4px;-webkit-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px;overflow: hidden;}
+.panel-htop .combo-panel{-moz-border-radius:0 0 4px 4px;-webkit-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px;overflow: hidden;}
+.calendar-other-month{filter:alpha(opacity=40);opacity:0.4;}
+.datebox-button a{font-weight: normal;}
