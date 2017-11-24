@@ -11,15 +11,17 @@ module.exports = {
       outAllFile : 'all.json' //摘要输出文件名
   },
   thumb :{//输出thumb参数
-    run : true, //是否输出thumb小图片
-    pathName : 'thumb', //小图片对应在out里的目录
+    run : false, //是否输出thumb小图片
+    // pathName : 'thumb', //小图片对应在out里的目录
+    pathName : '', //小图片对应在out里的目录
     type : 'w', //压缩处理文件类型  'auto'||'w'||'h' (宽高自动 || 限宽 || 限高)
     maxsize : 200, //最大尺寸
     quality : 90 //图片质量 0-100
   },
   gallery : {//输出gallery参数
     run : true, //是否输出gallery图片
-    pathName : 'gallery', //gallery图片对应在out里的目录
+    // pathName : 'gallery', //gallery图片对应在out里的目录
+    pathName : '', //gallery图片对应在out里的目录
     type : 'auto', //压缩处理文件类型  'auto'||'w'||'h' (宽高自动 || 限宽 || 限高)
     maxsize : 1500, //最大尺寸
     quality : 80 //图片质量 0-100

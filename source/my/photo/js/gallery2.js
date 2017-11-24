@@ -292,12 +292,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
 $.getJSON('json/all.json',function(rst){
   var data = rst.data;
-  var my7niuUrl = 'http://ozdubs5p9.bkt.clouddn.com/';
-  $.each(data,function(i,v){
-    // v.src = '/photos/source/'+v.name;
-    v.gallery = my7niuUrl+'gallery/'+v.name;
-    v.thumb = my7niuUrl+'/thumb/'+v.name;
-  });
+  var photoBase = 'http://photo.bujichong.com/';
   // window.console && console.log(data.length,page);
   var wW = Math.floor($(window).width()*0.99),wH = Math.floor($(window).height()*0.99),wWH = wW/wH;
   $(window).resize(function () {
@@ -312,6 +307,8 @@ $.getJSON('json/all.json',function(rst){
   for(var i = 0; i < dl; i++) {
       var t = data[i];
       var g = {w:t.w,h:t.h};
+      var photo = photoBase+t.name;
+      var thumb = photo+'?imageView2/2/w/255/interlace/1/q/90';//缩微图
       if(t.w>wW||t.h>wH){
         var tWH = t.w/t.h;
         if (Math.floor(tWH*100)>=Math.floor(wWH*100)) {
@@ -326,8 +323,8 @@ $.getJSON('json/all.json',function(rst){
           }
         };
       }
-str += '<a class="box" href="'+t.gallery+'" data-size="'+t.w+'x'+t.h+'" data-med="'+t.gallery+'" data-med-size="'+g.w+'x'+g.h+'" data-author="bujichong">'+
-          '<img width="'+t.tw+'" height="'+t.th+'" src="'+t.thumb+'" alt="" />'+
+str += '<a class="box" href="'+photo+'" data-size="'+t.w+'x'+t.h+'" data-med="'+photo+'" data-med-size="'+g.w+'x'+g.h+'" data-author="bujichong">'+
+          '<img src="'+thumb+'" alt="" />'+
           //'<figure>This is dummy caption.</figure>'+
         '</a>';
   }

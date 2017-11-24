@@ -97,8 +97,16 @@ if (args[0]===undefined||args[0]=='run') {//处理图片
     opt.files.forEach(function(item){
         let filename = item.name;
         let sourcePath = opt.filePath + filename + "/";
-        let galleryPath = opt.fileOutPath + "gallery/" + filename;
-        let thumbPath = opt.fileOutPath  + "thumb/"+ filename;
+
+        let galleryParPath = opt.fileOutPath + opt.gallery.pathName+'/';
+        let thumbParPath = opt.fileOutPath  + opt.thumb.pathName +'/';
+
+        //创建图片输出父级目录
+        mkdirFilePath(galleryParPath);
+        mkdirFilePath(thumbParPath);
+
+        let galleryPath = galleryParPath + filename;
+        let thumbPath = thumbParPath+ filename;
 
         //创建图片输出目录
         mkdirFilePath(galleryPath);
