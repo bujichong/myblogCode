@@ -19,7 +19,7 @@ a:hover{color:#e66517;}
 ::-webkit-scrollbar-thumb:hover {background-color: rgba(0,0,0,0.4);-webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}
 ::-webkit-scrollbar-thumb:active {background: rgba(0,0,0,0.6);}
 
-header{position: absolute;left:0px;bottom:0;top:0;background-color: #111;width:280px;padding:5em 15px 0 20px;font-size:1.18em;color:#fff;}
+header{position: absolute;left:0px;bottom:0;top:0;background-color: #2a2d33;width:280px;padding:5em 15px 0 20px;font-size:1.18em;color:#fff;}
 h1{font-size:1.7em;color:#45abe8;font-weight: normal;}
 header span{
 	/*font-style:italic;*/
