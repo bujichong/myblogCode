@@ -27,9 +27,11 @@
   <div class="galleryOne">
       <a class="a-gallery" href="wall.html?name={{data.name}}">
         <img src="http://photo.bujichong.com/{{data.pic.name}}?imageView2/1/w/320/h/250/format/jpg/interlace/1/q/96|imageslim" alt="" />
-        <h3 class="h3-title">{{data.title}}</h3>
-        <p class="p-date">{{data.time}}</p>
-        <p class="p-info">{{data.info}}</p>
+        <div class="infobox">
+          <h3 class="h3-title">{{data.title}}</h3>
+          <p class="p-date">{{data.time}}</p>
+          <p class="p-info">{{data.info}}</p>
+        </div>
       </a>
   </div>
   {{/each}}

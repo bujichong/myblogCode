@@ -40,11 +40,25 @@ header span{
 header span a{margin: 0 10px;color:#e66517;}
 header span a:hover{text-decoration: underline;}
 
-.galleryAbs{overflow: hidden;width:90%;max-width:1860px;margin:10px auto;}
-.galleryOne{float: left;width:320px;padding:15px;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;-moz-box-shadow:1px 1px 2px #ccc;margin:0 10px 10px;border:1px solid #ddd;background-color: #fff;min-height:400px;}
+.galleryAbs{overflow: hidden;width:95%;margin:10px auto;text-align: center;}
+.galleryOne{max-width:320px;padding:15px;box-shadow:1px 1px 2px #ccc;-webkit-box-shadow:1px 1px 2px #ccc;-moz-box-shadow:1px 1px 2px #ccc;margin:0 5px 10px;border:1px solid #ddd;background-color: #fff;display: -moz-inline-stack;display:inline-block;*display:inline;*zoom:1;vertical-align: top;text-align: left;}
+.galleryOne img{width:100%;height:auto;}
 .galleryOne .h3-title{font-size:1.33em;padding:1em 0 0.2em;line-height:1.5em;}
 .galleryOne .p-date{color:#aaa;}
 .galleryOne .p-info{line-height:1.5em;padding:0.5em 0;}
+.infobox{height:150px;}
+@media screen and (max-width:700px) {
+.galleryOne{width:45%;padding:1%;margin:0 0.6% 10px;}
+.infobox{height:180px;}
+}
+@media (min-width: 700px) and (max-width: 1000px){
+.galleryOne{width:28%;padding:1%;margin:0 0.6% 10px;}
+.infobox{height:180px;}
+}
+@media (min-width: 1000px) and (max-width: 1200px){
+.galleryOne{width:20%;padding:1%;}
+.infobox{height:180px;}
+}
 
 /* Footer Style */
 .footer{
