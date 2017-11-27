@@ -1,99 +1,11 @@
-"use strict";
-/*
-此脚本用来处理图片，图片做两种输出 gallery和thumb，
-处理完毕后写入json/nowDate.json中
-2017-11-21
-bujichong
- */
-
-var args  = process.argv.splice(2);
-console.log(args[0]);
-
 const fs = require("fs");
-const images = require("images");
-const opt = require("./config");
-const imgType =  ["gif", "jpeg", "jpg", "png"];//只能处理这几种文件类型
-// const numberNaming = true;//是否采用数字序列重命名
-// const childPath = 'tom';//是否有子目录
-// const justJson = false;//只获取json,不处理图片
+const {bjTime,fileType,resizeImg,mkdirFilePath,getToken} = require("./tools");
+const qiniu = require('qiniu');
 
-
-//把时间转为北京时间
-function bjTime (dateString) {
-    let d = dateString?(new Date(dateString)):(new Date());
-    let ts = d.getTime();
-    // let ts = d.getTime() - d.getTimezoneOffset() * 60 * 1000;
-    let bjD = new Date(ts);
-    let date =  bjD.getDate();
-    let month =  bjD.getMonth()+1;
-    month = month*1<10?('0'+month):month;
-    date = date*1<10?('0'+date):date;
-    let time = bjD.getFullYear() + '-' +month +'-'+ date +' '+bjD.getHours()+':'+bjD.getMinutes()+':'+bjD.getSeconds();
-    return { time :time , timeString:ts };
-}
-
-//判断文件类型必须为图片
-function fileType (filename) {
-    var type = true;
-    if (!RegExp("\.(" + imgType.join("|") + ")$", "i").test(filename.toLowerCase())) {
-        // console.log("选择文件错误,图片类型必须是" + imgType.join("，") + "中的一种");
-        console.log('非图片文件~');
-        type = false;
-    }
-    return type;
-}
-
-/*
-图片处理等比宽高，并存储
-filePath : 图片源地址
-fileName ： 图片名称
-outPath :  图片保存地址
-outName : 图片保存名称
-opt ={
-    type : 'auto'||'w'||'h' (宽高自动 || 限宽 || 限高)
-    maxsize : 限制的最大尺寸
-    quality : 图片质量 0-100
-}
- */
-function resizeImg (filePath,fileName,outPath,outName,opt) {
-    const type = opt.type;
-    const maxsize = opt.maxsize;
-    const quality = opt.quality;
-    const img = images(filePath + "/" + fileName)//加载图像文件
-    const size = img.size();
-    const wh = size.width/size.height;
-    let newsize = size;
-//type,maxsize,quality
-    if(wh>=1&&type=='auto'||type=='w'){//'auto'&&图片宽>高 || 只限制宽
-        if (maxsize<size.width) {
-            (!opt.justJson)&&img.resize(maxsize)//等比缩放图像到maxsize像素宽
-            newsize = {width:maxsize,height:Math.floor(maxsize/wh)};
-        };
-    }
-    if(wh<1&&type=='auto'||type=='h'){//'auto'&&图片宽<高 || 只限制高
-        if(maxsize<size.height){
-            (!opt.justJson)&&img.resize(null,maxsize)//等比缩放图像到maxsize像素高
-            newsize = {width:Math.floor(maxsize*wh),height:maxsize};
-        }
-    }
-    if (!opt.justJson) {//如果不只是输出json
-        img.save(outPath + "/" + outName, {
-            quality : quality  //保存图片到文件,图片质量为60
-        });
-    };
-    return newsize;
-}
-
-//创建目录
-function mkdirFilePath (path) {
-    if (!fs.existsSync(path)) {
-        fs.mkdirSync(path);
-    }
-}
-
-
-if (args[0]===undefined||args[0]=='run') {//处理图片
-
+module.exports = {
+  gallery : function (opt,callback) {
+    let filesLen = opt.files.length;
+    let finished = 0;
     opt.files.forEach(function(item){
         let filename = item.name;
         let sourcePath = opt.filePath + filename + "/";
@@ -137,7 +49,9 @@ if (args[0]===undefined||args[0]=='run') {//处理图片
                     if(item.info){outJson.info = item.info};
                     if(item.time){outJson.time = item.time};
                     fs.writeFile(outfile, JSON.stringify(outJson, null, "\t"));
-                    console.log('处理完毕,#^_^#');
+                    finished++;
+                    console.log('处理完第'+finished+'/'+filesLen+'个文件夹,#^_^#');
+                    if (finished===filesLen) {callback&&callback()};//全部完成返回事件
                     return;
                 }
 
@@ -205,12 +119,8 @@ if (args[0]===undefined||args[0]=='run') {//处理图片
         });
 
     });
-
-};
-
-
-if (args[0]=='join'||args[0]=='-j') {
-
+  },
+  jsonJoin : function (opt,callback) {
     // var file="json/2017-11-20.json";
     // var result=JSON.parse(fs.readFileSync( file));
     // console.log(result);
@@ -223,10 +133,11 @@ if (args[0]=='join'||args[0]=='-j') {
         // console.log(files);
         (function iterator(index) {
             if (index == files.length) {
-                fs.writeFile(opt.join.path+opt.join.outFile , JSON.stringify(arr, null, "\t"));//输出全量json文件
-                fs.writeFile(opt.join.path+opt.join.outAbsFile , JSON.stringify(absArr, null, "\t"));//输出摘要json文件
-                fs.writeFile(opt.join.path+opt.join.outAllFile , JSON.stringify(allArr, null, "\t"));//输出摘要json文件
+                fs.writeFile(opt.join.path+opt.join.outFile , JSON.stringify(arr, null, "\t"));//输出合并json
+                fs.writeFile(opt.join.path+opt.join.outAbsFile , JSON.stringify(absArr, null, "\t"));//输出摘要json
+                fs.writeFile(opt.join.path+opt.join.outAllFile , JSON.stringify(allArr, null, "\t"));//输出全量文件扁平合格json
                 console.log('处理完毕,#^_^#');
+                callback && callback();
                 return;
             }
 
@@ -257,6 +168,54 @@ if (args[0]=='join'||args[0]=='-j') {
 
         }(0));
     });
+  },
+  uploadQiniu : function (opt , jsonFile) {
+      const promise = new Promise(function(resolve, reject) {//获取uploadToken
+        let uploadToken=getToken(opt.qiniu);
+        resolve(uploadToken);
+      });
 
 
-};
+      promise.then(function (uploadToken) {//上传图片
+          // console.log(uploadToken);
+          let file= jsonFile || (opt.join.path+opt.join.outAllFile);
+          console.log('上传文件对应的json路径：'+file);
+          try{
+            let uploadData = JSON.parse(fs.readFileSync( file));
+            if (uploadToken&&uploadData&&uploadData.data&&uploadData.data.length) {
+
+                var config = new qiniu.conf.Config();
+                config.zone = qiniu.zone[opt.qiniu.zone];// 空间对应的机房
+
+                // var localFile = ["images/loader.gif","images/pinstripe.gif"];
+                var formUploader = new qiniu.form_up.FormUploader(config);
+                var putExtra = new qiniu.form_up.PutExtra();
+
+                // 文件上传
+                uploadData.data.forEach(function (item,i) {
+                    let localFile = opt.fileOutPath + item.name;
+                    let key= item.name;
+                    formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
+                      respBody, respInfo) {
+                      if (respErr) {
+                        throw respErr;
+                      }
+                      if (respInfo.statusCode == 200) {
+                        console.log(respBody);
+                      } else {
+                        console.log(respInfo.statusCode);
+                        console.log(respBody);
+                      }
+                    });
+                });
+
+            };
+          }catch(e){
+            console.error('需要上传文件的json路径不正确~');
+          }
+
+
+      });
+
+  }
+}
