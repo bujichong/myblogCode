@@ -308,6 +308,7 @@ $.getJSON('json/one/'+jsonName,function(rst){
   });
 
   $('header').html(template('headerInfo',rst));
+  $('title').html(rst.title);
   var str = "";
   var dl = data.length;
   for(var i = 0; i < dl; i++) {
