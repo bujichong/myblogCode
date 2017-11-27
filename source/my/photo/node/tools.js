@@ -70,14 +70,5 @@ opt ={
         if (!fs.existsSync(path)) {
             fs.mkdirSync(path);
         }
-    },
-    getToken : function (o) {//获取七牛上传临时uploadToken
-      let mac = new qiniu.auth.digest.Mac(o.accessKey, o.secretKey);
-      let options = {
-        scope: o.bucket
-      };
-      let putPolicy = new qiniu.rs.PutPolicy(options);
-      let uploadToken=putPolicy.uploadToken(mac);
-      return uploadToken;
     }
 }

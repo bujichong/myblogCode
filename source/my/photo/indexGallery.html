@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>相册-this is life</title>
+<link type="text/css" rel="stylesheet" href="css/abs.css" />
+<link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css' />
+<link href='https://fonts.googleapis.com/css?family=Wire+One' rel='stylesheet' type='text/css' />
+<style type="text/css">
+
+</style>
+</head>
+<body>
+<div class="htmleaf-container">
+  <header>
+      <h1 class="h1-abs">This is life</h1>
+      <span><a href="/">&lt;返回</a></span>
+  </header>
+  <div class="galleryAbs"></div>
+</div>
+
+
+<script id="absList" type="text/html">
+{{each $data as data}}
+  <div class="galleryOne">
+      <a class="a-gallery" href="wall.html?name={{data.name}}">
+        <img src="http://photo.bujichong.com/{{data.pic.name}}?imageView2/1/w/320/h/250/format/jpg/interlace/1/q/96|imageslim" alt="" />
+        <h3 class="h3-title">{{data.title}}</h3>
+        <p class="p-date">{{data.time}}</p>
+        <p class="p-info">{{data.info}}</p>
+      </a>
+  </div>
+  {{/each}}
+</script>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="js/template.js"></script>
+<script type="text/javascript" src="js/abs.js"></script>
+</body>
+</html>

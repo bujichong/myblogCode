@@ -1,5 +1,5 @@
 const fs = require("fs");
-const {bjTime,fileType,resizeImg,mkdirFilePath,getToken} = require("./tools");
+const {bjTime,fileType,resizeImg,mkdirFilePath} = require("./tools");
 const qiniu = require('qiniu');
 
 module.exports = {
@@ -30,6 +30,7 @@ module.exports = {
         //说明文件必须为readme.txt
         fs.readdir(sourcePath, function (err, files) {
             if (err) {
+                console.error('需要处理图片的路径不存在：'+sourcePath);
                 return;
             }
             var nowTime = bjTime();
@@ -170,29 +171,40 @@ module.exports = {
     });
   },
   uploadQiniu : function (opt , jsonFile) {
-      const promise = new Promise(function(resolve, reject) {//获取uploadToken
-        let uploadToken=getToken(opt.qiniu);
-        resolve(uploadToken);
-      });
+        let o = opt.qiniu;
+        const promise = new Promise(function(resolve, reject) {//获取七牛上传临时uploadToken
+              let mac = new qiniu.auth.digest.Mac(o.accessKey, o.secretKey);
+              let options = {
+                scope: o.bucket
+              };
+              let putPolicy = new qiniu.rs.PutPolicy(options);
+              let uploadToken=putPolicy.uploadToken(mac);
+            resolve(uploadToken);
+        });
 
 
       promise.then(function (uploadToken) {//上传图片
           // console.log(uploadToken);
           let file= jsonFile || (opt.join.path+opt.join.outAllFile);
           console.log('上传文件对应的json路径：'+file);
+          let filesData = '';
           try{
-            let uploadData = JSON.parse(fs.readFileSync( file));
-            if (uploadToken&&uploadData&&uploadData.data&&uploadData.data.length) {
-
+            filesData = JSON.parse(fs.readFileSync( file));
+          }catch(e){
+            console.error('需要上传文件的json路径不正确~');
+            return;
+          }
+        if (uploadToken&&filesData&&filesData.data&&filesData.data.length) {
                 var config = new qiniu.conf.Config();
-                config.zone = qiniu.zone[opt.qiniu.zone];// 空间对应的机房
+                config.zone = qiniu.zone[o.zone];// 空间对应的机房
 
                 // var localFile = ["images/loader.gif","images/pinstripe.gif"];
                 var formUploader = new qiniu.form_up.FormUploader(config);
                 var putExtra = new qiniu.form_up.PutExtra();
+                var dataLen = filesData.data.length;
 
                 // 文件上传
-                uploadData.data.forEach(function (item,i) {
+                filesData.data.forEach(function (item,i) {
                     let localFile = opt.fileOutPath + item.name;
                     let key= item.name;
                     formUploader.putFile(uploadToken, key, localFile, putExtra, function(respErr,
@@ -201,21 +213,55 @@ module.exports = {
                         throw respErr;
                       }
                       if (respInfo.statusCode == 200) {
-                        console.log(respBody);
+                        console.log(item,respBody);
                       } else {
                         console.log(respInfo.statusCode);
-                        console.log(respBody);
+                        console.log(item,respBody);
                       }
+                      if (i === dataLen-1) {
+                        console.log('上传任务结束，共上传处理'+dataLen+'个文件~');
+                      };
                     });
                 });
 
             };
-          }catch(e){
-            console.error('需要上传文件的json路径不正确~');
-          }
-
 
       });
 
-  }
+  },
+  delFromQiniu : function (opt,jsonFile) {//删除文件
+        let o = opt.qiniu;
+        let mac = new qiniu.auth.digest.Mac(o.accessKey, o.secretKey);
+        let config = new qiniu.conf.Config();
+        config.zone = qiniu.zone[o.zone];// 空间对应的机房
+        let bucketManager = new qiniu.rs.BucketManager(mac, config);
+
+        // let file= jsonFile || (opt.join.path+opt.join.outAllFile);
+        let file= jsonFile;
+        console.log('删除文件对应的json路径：'+file);
+
+        let filesData = JSON.parse(fs.readFileSync( file));
+        var dataLen = filesData.data.length;
+        if (dataLen>0) {
+            filesData.data.forEach(function (item,i) {
+                let key= item.name;
+                bucketManager.delete(o.bucket, key, function(err, respBody, respInfo) {
+                  if (err) {
+                    console.log(err);
+                    //throw err;
+                  } else {
+                    console.log(key,respInfo.statusCode);
+                    console.log(respBody);
+                  }
+                });
+
+              if (i === dataLen-1) {
+                console.log('删除任务结束，共删除'+dataLen+'个文件~');
+              };
+
+            });
+        };
+
+
+    }
 }
