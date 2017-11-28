@@ -6,114 +6,133 @@
 	"data": [
 		{
 			"name": "hangzhou/0.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:56:6",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/1.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:57:18",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/2.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:31:34",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/3.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:30:41",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/4.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:33:8",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/5.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:14:23",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/6.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:34:58",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/7.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:15:29",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/8.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:13:28",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/9.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:14:9",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/10.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:32:52",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/11.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:21:29",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/12.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:8:0",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/13.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:2:31",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/14.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:34:37",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/15.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:39:24",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/16.jpg",
+			"type": "pic",
 			"time": "2017-02-16 12:55:58",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/17.jpg",
+			"type": "pic",
 			"time": "2017-02-16 12:56:54",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "hangzhou/18.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:39:42",
 			"w": 1500,
 			"h": 1000

@@ -6,174 +6,203 @@
 	"data": [
 		{
 			"name": "oldhome/0.jpg",
+			"type": "pic",
 			"time": "2017-04-25 8:35:53",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/1.jpg",
+			"type": "pic",
 			"time": "2017-04-25 8:34:18",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/2.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:27",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/3.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:28",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/4.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:26",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/5.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:18",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/6.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:17",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/7.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:16",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/8.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:19",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/9.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:51:1",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/10.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:59",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/11.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:57",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/12.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:57",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/13.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:40",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/14.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:44",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/15.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:57",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/16.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:41",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/17.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:40",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/18.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:35",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/19.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:30",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/20.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:28",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/21.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:29",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/22.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:18",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/23.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:19",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/24.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:16",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/25.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:12",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/26.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:13",
 			"w": 1125,
 			"h": 1500
 		},
 		{
 			"name": "oldhome/27.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:12",
 			"w": 1500,
 			"h": 1125
 		},
 		{
 			"name": "oldhome/28.jpg",
+			"type": "pic",
 			"time": "2017-06-12 10:50:13",
 			"w": 1125,
 			"h": 1500

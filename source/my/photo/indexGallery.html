@@ -6,11 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>相册-this is life</title>
 <link type="text/css" rel="stylesheet" href="css/abs.css" />
-<link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css' />
-<link href='https://fonts.googleapis.com/css?family=Wire+One' rel='stylesheet' type='text/css' />
-<style type="text/css">
-
-</style>
+<link rel="stylesheet" type="text/css" href="js/lightGallery/lightgallery.css">
+<link rel="stylesheet" type="text/css" href="js/videojs/video-js.css">
 </head>
 <body>
 <div class="htmleaf-container">
@@ -25,20 +22,42 @@
 <script id="absList" type="text/html">
 {{each $data as data}}
   <div class="galleryOne">
+  {{if data.thumb.thumb}}
+    <div style="display:none;" id="video-{{$index}}">
+        <video class="lg-video-object lg-html5 video-js vjs-default-skin" controls preload="none">
+            <source src="http://photo.bujichong.com/{{data.thumb.name}}" type="video/mp4">
+             你的浏览器不支持 HTML5 video.
+        </video>
+    </div>
+    <div class="video-gallery">
+      <a class="a-gallery" data-poster="http://photo.bujichong.com/{{data.thumb.thumb}}?imageView2/1/w/845/h/475/format/jpg/interlace/1/q/80|imageslim" data-sub-html="{{data.title}}" data-html="#video-{{$index}}">
+        <img src="http://photo.bujichong.com/{{data.thumb.thumb}}?imageView2/1/w/320/h/250/format/jpg/interlace/1/q/96|imageslim" alt="" />
+        <div class="infobox">
+          <h3 class="h3-title">{{data.title}}</h3>
+          <p class="p-date">{{data.time}}</p>
+          <p class="p-info">{{data.info}}</p>
+        </div>
+        <span class="s-player"></span>
+      </a>
+    </div>
+  {{else }}
       <a class="a-gallery" href="wall.html?name={{data.name}}">
-        <img src="http://photo.bujichong.com/{{data.pic.name}}?imageView2/1/w/320/h/250/format/jpg/interlace/1/q/96|imageslim" alt="" />
+        <img src="http://photo.bujichong.com/{{data.thumb.name}}?imageView2/1/w/320/h/250/format/jpg/interlace/1/q/96|imageslim" alt="" />
         <div class="infobox">
           <h3 class="h3-title">{{data.title}}</h3>
           <p class="p-date">{{data.time}}</p>
           <p class="p-info">{{data.info}}</p>
         </div>
       </a>
+  {{/if}}
   </div>
   {{/each}}
 </script>
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.masonry.min.js"></script>
 <script type="text/javascript" src="js/template.js"></script>
+<script type="text/javascript" src="js/lightGallery/lightgallery-all.pack.js"></script>
+<script type="text/javascript" src="js/videojs/video.min.js"></script>
 <script type="text/javascript" src="js/abs.js"></script>
 </body>
 </html>

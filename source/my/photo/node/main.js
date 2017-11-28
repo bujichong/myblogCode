@@ -15,7 +15,7 @@ const {bjTime,fileType,resizeImg,mkdirFilePath} = require("./tools");
 const {gallery,jsonJoin,uploadQiniu,delFromQiniu} = require("./gallery");
 
 
-if (args[0]===undefined||args[0]=='all'||args[0]=='-a') {//all 处理
+if (args[0]=='all'||args[0]=='-a') {//all 处理
     gallery(opt,function () {//先处理图片，在合并
         jsonJoin(opt,function () {
           uploadQiniu(opt,args[1]);
@@ -23,7 +23,7 @@ if (args[0]===undefined||args[0]=='all'||args[0]=='-a') {//all 处理
     });
 };
 
-if (args[0]=='run'||args[0]=='photo'||args[0]=='-p'||args[0]=='-r') {//处理图片
+if (args[0]===undefined||args[0]=='run'||args[0]=='photo'||args[0]=='-p'||args[0]=='-r') {//处理图片
     gallery(opt);
 };
 

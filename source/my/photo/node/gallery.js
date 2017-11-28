@@ -6,23 +6,32 @@ module.exports = {
   gallery : function (opt,callback) {
     let filesLen = opt.files.length;
     let finished = 0;
+    let thumbParPath , galleryParPath;//创建图片父目录
+
+     if(opt.thumb.run){//如果需要输出thumb
+        thumbParPath = opt.fileOutPath  + opt.thumb.pathName +'/'
+        mkdirFilePath(thumbParPath);//创建图片输出父级目录
+     }
+     if(opt.gallery.run){//如果需要输出gallery
+        galleryParPath = opt.fileOutPath + opt.gallery.pathName+'/'
+        mkdirFilePath(galleryParPath);//创建图片输出父级目录
+     }
+
     opt.files.forEach(function(item){
         let filename = item.name;
         let sourcePath = opt.filePath + filename + "/";
 
-        let galleryParPath = opt.fileOutPath + opt.gallery.pathName+'/';
-        let thumbParPath = opt.fileOutPath  + opt.thumb.pathName +'/';
+        let thumbPath , galleryPath;//图片输出目录
 
-        //创建图片输出父级目录
-        mkdirFilePath(galleryParPath);
-        mkdirFilePath(thumbParPath);
+         if(opt.thumb.run){//如果需要输出thumb
+            thumbPath = thumbParPath+ filename;
+            mkdirFilePath(thumbPath);//创建图片输出目录
+         }
+         if(opt.gallery.run){//如果需要输出gallery
+            galleryPath = galleryParPath + filename;
+            mkdirFilePath(galleryPath);//创建图片输出目录
+         }
 
-        let galleryPath = galleryParPath + filename;
-        let thumbPath = thumbParPath+ filename;
-
-        //创建图片输出目录
-        mkdirFilePath(galleryPath);
-        mkdirFilePath(thumbPath);
         //json输出地址及名称
         let outfile = opt.jsonOutPath+filename+'.json';
         // console.log('=======进入目录：'+filename+"=======");
@@ -81,6 +90,7 @@ module.exports = {
                             let cTime = bjTime(stats.mtime);
                             let temp = {
                                 name:filename+'/'+outName,
+                                type : 'pic',
                                 // tw : tb.width , th : tb.height,
                                 // w : sz.width , h : sz.height,
                                 time:cTime.time
@@ -100,16 +110,26 @@ module.exports = {
                             outJson.data.push(temp);
                         }
                          iterator(index + 1);
-
                     });
-                }else if( ex=='.txt'){
+                }else if( ex=='.mp4'){//视频文件，复制到新目录，video的名称不做重写，视频缩微图和文件命名一致
+                    var readStream = fs.createReadStream(sourcePath + "/" + fileName);
+                    var writeStream = fs.createWriteStream(galleryPath + "/"+fileName);
+                    readStream.pipe(writeStream);//复制
+                     outJson.data.push({
+                            name : filename+'/'+fileName,
+                            type : 'video',
+                            thumb:filename+'/'+fileName.replace(ex,'.jpg'),//video对应的预览图为 同名.jpg文件
+                            time:bjTime().time
+                     });
+                    iterator(index + 1);
+                }else if( ex=='.txt'||ex=='.html'){//说明文件
                   fs.readFile(sourcePath + "/" + fileName, {flag: 'r+', encoding: 'utf8'}, function (err, data) {
                     if(err) {
                         console.error(err);
                         return;
                     }
                     console.log('处理中...,第'+(index+1)+'/'+files.length+'个，文件：'+filename+'/'+fileName+'，内容：'+data);
-                    outJson.title = fileName.replace(/.txt$/,'');//写入title字段中
+                    outJson.title = fileName.replace(/(.txt|.html)$/,'');//写入title字段中
                     outJson.info = data;//写入info字段中
 
                      iterator(index + 1);
@@ -161,7 +181,7 @@ module.exports = {
                         name :  fileData.name,
                         time : fileData.time,
                         // timeString : fileData.timeString,
-                        pic : fileData.data[0]
+                        thumb : fileData.data[0]
                     });
                     allArr.data.push.apply( allArr.data , fileData.data );
                 }

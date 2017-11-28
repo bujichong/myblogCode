@@ -6,24 +6,28 @@
 	"data": [
 		{
 			"name": "wuzhen/0.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:51:1",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "wuzhen/1.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:50:10",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "wuzhen/2.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:49:8",
 			"w": 1500,
 			"h": 1000
 		},
 		{
 			"name": "wuzhen/3.jpg",
+			"type": "pic",
 			"time": "2017-02-16 13:49:13",
 			"w": 1500,
 			"h": 1000
