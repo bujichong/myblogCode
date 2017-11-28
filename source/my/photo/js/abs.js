@@ -4,7 +4,11 @@ $.getJSON('json/abs.json',function(rst){
   $(".galleryAbs").append(template('absList',data));
 
 $('.video-gallery').lightGallery({
-    videojs: true
+    videojs: true,
+    share : false,
+    download: false,
+    zoom : false,
+    actualSize : false
 });
 
 });
