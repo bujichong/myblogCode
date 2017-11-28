@@ -5,7 +5,7 @@ module.exports = {
   //info : info ，可选参数，如果不写，取图片目录下的txt文件内的文字
   //time : time ，可选参数，如果不写，取json文件生成的时间
   files : [{
-      "name": "3old"
+      "name": "threeold"
     }],
     //已处理的放在already中，做记录使用
     already : [{
