@@ -38,6 +38,7 @@ module.exports = {
             let outJson = {
                 title : '',
                 info : '',
+                name : filename,
                 time : nowTime.time,
                 // timeString : nowTime.timeString,
                 data : []
@@ -157,7 +158,7 @@ module.exports = {
                     absArr.push({
                         title : fileData.title,
                         info : fileData.info,
-                        name :  files[index],
+                        name :  fileData.name,
                         time : fileData.time,
                         // timeString : fileData.timeString,
                         pic : fileData.data[0]

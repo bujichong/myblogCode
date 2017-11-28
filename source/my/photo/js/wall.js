@@ -296,7 +296,7 @@ function GetQueryString(name){
 }
 var jsonName = GetQueryString('name');
 
-$.getJSON('json/one/'+jsonName,function(rst){
+$.getJSON('json/one/'+jsonName+'.json',function(rst){
   var data = rst.data;
   var photoBase = 'http://photo.bujichong.com/';
   // window.console && console.log(data.length,page);
